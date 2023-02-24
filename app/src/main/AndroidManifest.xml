@@ -8,9 +8,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sharing">
-        <activity android:name="com.jkb.junbin.sharing.ui.MainActivity"/>
+        <activity android:name="com.jkb.junbin.sharing.function.shell.MainActivity"/>
         <activity
-            android:name="com.jkb.junbin.sharing.ui.LoginActivity"
+            android:name="com.jkb.junbin.sharing.feature.account.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
