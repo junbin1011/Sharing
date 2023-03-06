@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_user">个人</string>
+    <string name="tab_message">消息</string>
+    <string name="tab_file">文件</string>
+    <string name="app_name">Sharing</string>
+</resources>

@@ -1,12 +1,4 @@
 <resources>
-    <string name="app_name">Sharing</string>
-    <string name="tab_file">文件</string>
-    <string name="tab_message">消息</string>
-    <string name="tab_user">个人</string>
-    <string name="prompt_username">用户名</string>
-    <string name="prompt_password">密码</string>
-    <string name="action_sign_in">登录</string>
-    <string name="action_sign_out">退出</string>
     <string name="username">用户：</string>
     <string name="publish">发布</string>
     <string name="upload">上传</string>

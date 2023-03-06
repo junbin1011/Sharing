@@ -1,2 +1,21 @@
-include ':app'
 rootProject.name = "Sharing"
+include ':app'
+
+include 'log'
+project(':log').projectDir =file('./Library/log')
+include 'net'
+project(':net').projectDir =file('./Library/net')
+include 'storage'
+project(':storage').projectDir =file('./Library/storage')
+
+include 'transfer'
+project(':transfer').projectDir =file('./Function/transfer')
+include 'shell'
+project(':shell').projectDir =file('./Function/shell')
+
+include 'file'
+project(':file').projectDir =file('./Feature/file')
+include 'message'
+project(':message').projectDir =file('./Feature/message')
+include 'account'
+project(':account').projectDir =file('./Feature/account')

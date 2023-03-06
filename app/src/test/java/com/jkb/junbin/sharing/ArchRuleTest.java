@@ -26,7 +26,7 @@ public class ArchRuleTest {
 
     @ArchTest
     public static final ArchRule library_should_only_dependOn_itself =
-            target_package_only_dependOn_itSelf(LIBRARY);
+            target_package_not_dependOn_other_package(LIBRARY,FUNCTION,FEATURE);
 
     @ArchTest
     public static final ArchRule function_should_not_dependOn_feature =
@@ -51,6 +51,6 @@ public class ArchRuleTest {
 
     private static ClassesShouldConjunction target_package_only_dependOn_itSelf(String targetPackage) {
         return classes().that().resideInAPackage(targetPackage)
-                .should().dependOnClassesThat().resideInAPackage(targetPackage);
+                .should().dependOnClassesThat().resideInAnyPackage(targetPackage);
     }
 }

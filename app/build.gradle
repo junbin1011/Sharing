@@ -4,7 +4,6 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.jkb.junbin.sharing"
@@ -26,16 +25,41 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests {
+            unitTests.returnDefaultValues = true
+            includeAndroidResources = true
+        }
+    }
+
 }
 
 dependencies {
+    implementation project(':log')
+    implementation project(':net')
+    implementation project(':storage')
+
+    implementation project(':transfer')
+    implementation project(':shell')
+
+    implementation project(':file')
+    implementation project(':message')
+    implementation project(':account')
 
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:'
+    testImplementation 'androidx.test:runner:1.4.0'
+    testImplementation 'androidx.test:core:1.4.0'
+    testImplementation 'androidx.test.ext:junit:1.1.3'
+    testImplementation 'org.robolectric:robolectric:4.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "com.google.truth:truth:1.0.1"
     testImplementation 'com.tngtech.archunit:archunit-junit4:0.15.0'
+    testImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
