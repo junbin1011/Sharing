@@ -15,27 +15,26 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jkb.junbin.sharing.function.shell.MainActivity;
 import com.jkb.junbin.sharing.function.shell.interfaces.IAccountState;
 import com.jkb.junbin.sharing.function.transfer.FileInfo;
+import com.jkb.junbin.sharing.function.transfer.FileTransfer;
 
 
 import java.util.List;
 
-
+@Route(path = "/fileFeature/file")
 public class FileFragment extends Fragment {
 
     FileController fileController = new FileController();
     private RecyclerView fileListRecycleView;
     private TextView tvMessage;
-    private IAccountState iAccountState;
-    {
-        try {
-            iAccountState = (IAccountState) Class.forName("com.jkb.junbin.sharing.feature.account.AccountStateImpl").newInstance();
-        } catch (IllegalAccessException | java.lang.InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+
+    @Autowired
+    IAccountState iAccountState;
 
     public static FileFragment newInstance() {
         FileFragment fragment = new FileFragment();
@@ -60,12 +59,13 @@ public class FileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ARouter.getInstance().inject(this);
         getFileList();
     }
 
     public void uploadFile() {
         //上传文件
-        FileInfo fileInfo = fileController.fileTransfer.upload(iAccountState.getUsername(), "/data/data/user.png");
+        FileInfo fileInfo = new FileTransfer(iAccountState.isLogin()).upload(iAccountState.getUsername(), "/data/data/user.png");
         if (fileInfo != null) {
             FileListAdapter fileListAdapter = (FileListAdapter) fileListRecycleView.getAdapter();
             if (fileListAdapter != null) {

@@ -4,6 +4,7 @@ package com.jkb.junbin.sharing.feature.file;
 import android.accounts.NetworkErrorException;
 
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.jkb.junbin.sharing.function.shell.interfaces.IAccountState;
 import com.jkb.junbin.sharing.function.transfer.FileInfo;
 import com.jkb.junbin.sharing.function.transfer.FileTransfer;
@@ -15,18 +16,6 @@ import java.util.List;
 
 
 public class FileController {
-
-    private IAccountState iAccountState;
-    {
-        try {
-            iAccountState = (IAccountState) Class.forName("com.jkb.junbin.sharing.feature.account.AccountStateImpl").newInstance();
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public FileTransfer fileTransfer = new FileTransfer(iAccountState.isLogin());
 
     //模拟获取文件
     public List<FileInfo> getFileList() throws NetworkErrorException {

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 
-
-
+@Route(path = "/accountFeature/account")
 public class AccountFragment extends Fragment {
 
     AccountController accountController = new AccountController();
@@ -32,7 +32,7 @@ public class AccountFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_account, container, false);
         tvName = inflate.findViewById(R.id.name);
         btnLogOut = inflate.findViewById(R.id.logout);
-        tvName.setText( accountController.getCurrentUserInfo().username);
+        tvName.setText(accountController.getCurrentUserInfo().username);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jkb.junbin.sharing.function.shell.interfaces.IAccountState;
 import com.jkb.junbin.sharing.function.transfer.FileInfo;
 import com.jkb.junbin.sharing.function.shell.MainActivity;
@@ -22,21 +25,15 @@ import com.jkb.junbin.sharing.function.transfer.FileTransfer;
 
 import java.util.List;
 
-
+@Route(path = "/messageFeature/message")
 public class MessageFragment extends Fragment {
 
     MessageController messageController;
     private RecyclerView dynamicListRecycleView;
     private TextView tvMessage;
-    private IAccountState iAccountState;
 
-    {
-        try {
-            iAccountState = (IAccountState) Class.forName("com.jkb.junbin.sharing.feature.account.AccountStateImpl").newInstance();
-        } catch (IllegalAccessException | java.lang.InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    IAccountState iAccountState;
 
     public static MessageFragment newInstance() {
         MessageFragment fragment = new MessageFragment();
@@ -48,6 +45,7 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
         messageController = new MessageController(getActivity());
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         dynamicListRecycleView = view.findViewById(R.id.file_list);

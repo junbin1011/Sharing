@@ -6,6 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jkb.junbin.sharing.feature.message.db.DataBaseHelper;
 import com.jkb.junbin.sharing.function.shell.interfaces.IAccountState;
 import com.jkb.junbin.sharing.function.transfer.FileInfo;
@@ -19,17 +21,12 @@ import java.util.List;
 public class MessageController {
 
     Context mContext;
-    private IAccountState iAccountState;
-    {
-        try {
-            iAccountState = (IAccountState) Class.forName("com.jkb.junbin.sharing.feature.account.AccountStateImpl").newInstance();
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    IAccountState iAccountState;
 
     public MessageController(Context context) {
         mContext = context;
+        ARouter.getInstance().inject(this);
     }
 
     public boolean post(Message message, FileInfo fileInfo) {

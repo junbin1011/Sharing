@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jkb.junbin.sharing.function.shell.adapter.SectionsPagerAdapter;
 import com.jkb.junbin.sharing.function.shell.interfaces.IFileAddClickListener;
 import com.jkb.junbin.sharing.function.shell.interfaces.IMessageAddClickListener;
@@ -30,13 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvAdd = findViewById(R.id.tv_add);
         List<Fragment> fragments = new ArrayList<>();
-        try {
-            fragments.add((Fragment) Class.forName("com.jkb.junbin.sharing.feature.message.MessageFragment").newInstance());
-            fragments.add((Fragment) Class.forName("com.jkb.junbin.sharing.feature.file.FileFragment").newInstance());
-            fragments.add((Fragment) Class.forName("com.jkb.junbin.sharing.feature.account.AccountFragment").newInstance());
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
+        fragments.add((Fragment) ARouter.getInstance().build("/messageFeature/message").navigation());
+        fragments.add((Fragment) ARouter.getInstance().build("/fileFeature/file").navigation());
+        fragments.add((Fragment) ARouter.getInstance().build("/accountFeature/account").navigation());
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), fragments);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(fragments.size());
