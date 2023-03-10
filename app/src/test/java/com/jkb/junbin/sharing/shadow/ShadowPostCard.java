@@ -21,7 +21,6 @@ public class ShadowPostCard {
             map.put("/fileFeature/file", Class.forName("com.jkb.junbin.sharing.feature.file.FileFragment"));
             map.put("/messageFeature/message", Class.forName("com.jkb.junbin.sharing.feature.message.MessageFragment"));
             map.put("/accountFeature/account", Class.forName("com.jkb.junbin.sharing.feature.account.AccountFragment"));
-            map.put("/accountFeature/account", Class.forName("com.jkb.junbin.sharing.feature.account.AccountFragment"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

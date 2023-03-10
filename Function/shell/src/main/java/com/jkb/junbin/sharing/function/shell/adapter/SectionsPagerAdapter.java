@@ -20,15 +20,15 @@ import java.util.List;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.tab_message,R.string.tab_file, R.string.tab_user};
     private final Context mContext;
     private List<Fragment> fragments = new ArrayList<>();
+    private List<Integer> tabTitles = new ArrayList<>();
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm, List<Fragment> fragments) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, List<Fragment> fragments,List<Integer> tabTitles) {
         super(fm);
         mContext = context;
         this.fragments = fragments;
+        this.tabTitles = tabTitles;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return mContext.getResources().getString(tabTitles.get(position));
     }
 
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 3;
+        return tabTitles.size();
     }
 }
