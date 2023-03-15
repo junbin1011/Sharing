@@ -1,15 +1,12 @@
 package com.jkb.junbin.sharing.feature.file;
 
-import android.accounts.NetworkErrorException;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,20 +20,17 @@ import com.jkb.junbin.sharing.function.shell.interfaces.IAccountState;
 import com.jkb.junbin.sharing.function.transfer.FileInfo;
 import com.jkb.junbin.sharing.function.transfer.FileTransfer;
 
-
 import java.util.List;
 
 @Route(path = "/fileFeature/file")
-public class FileFragment extends Fragment {
-
-    FileController fileController = new FileController();
+public class FileFragment extends Fragment implements FileListContract.FileView {
     private RecyclerView fileListRecycleView;
     private TextView tvMessage;
-
+    private FileListContract.FilePresenter filePresenter = new FilePresenterImpl(new FileRemoteDataSource(),this);
     @Autowired
     IAccountState iAccountState;
 
-    public static FileFragment newInstance() {
+    public static FileListContract.FileView newInstance() {
         FileFragment fragment = new FileFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -50,17 +44,17 @@ public class FileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_file, container, false);
         fileListRecycleView = view.findViewById(R.id.file_list);
         tvMessage = view.findViewById(R.id.tv_message);
-        tvMessage.setOnClickListener(v -> getFileList());
-        ((MainActivity) getActivity()).setFileAddClickListener(() -> uploadFile());
+        tvMessage.setOnClickListener(v -> filePresenter.getFileList());
+        if(getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setFileAddClickListener(() -> uploadFile());
+        }
+        filePresenter.getFileList();
         return view;
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        getFileList();
     }
 
     public void uploadFile() {
@@ -74,49 +68,30 @@ public class FileFragment extends Fragment {
             }
         }
     }
-
-
-    private void getFileList() {
-        new Thread(() -> {
-            Message message = new Message();
-            try {
-                List<FileInfo> infoList = fileController.getFileList();
-                message.what = 1;
-                message.obj = infoList;
-            } catch (NetworkErrorException e) {
-                message.what = 0;
-                message.obj = "网络异常，请点击重试。";
-                e.printStackTrace();
-            }
-            mHandler.sendMessage(message);
-        }).start();
+    @Override
+    public void showFileList(Object fileList) {
+        showTip(false);
+        //显示网络数据
+        List<FileInfo> infoList = (List<FileInfo>) fileList;
+        FileListAdapter fileListAdapter = new FileListAdapter(infoList, getActivity());
+        fileListRecycleView.addItemDecoration(new DividerItemDecoration(
+                getActivity(), DividerItemDecoration.VERTICAL));
+        //设置布局显示格式
+        fileListRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fileListRecycleView.setAdapter(fileListAdapter);
     }
 
-    Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            if (msg.what == 1) {
-                showTip(false);
-                //显示网络数据
-                List<FileInfo> infoList = (List<FileInfo>) msg.obj;
-                FileListAdapter fileListAdapter = new FileListAdapter(infoList, getActivity());
-                fileListRecycleView.addItemDecoration(new DividerItemDecoration(
-                        getActivity(), DividerItemDecoration.VERTICAL));
-                //设置布局显示格式
-                fileListRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                fileListRecycleView.setAdapter(fileListAdapter);
-            } else if (msg.what == 0) {
-                showTip(true);
-                //显示异常提醒数据
-                tvMessage.setText(msg.obj.toString());
-            } else {
-                showTip(true);
-                //显示空数据
-                tvMessage.setText("没有数据，请点击重试。");
-            }
-            return false;
-        }
-    });
+    @Override
+    public void showNetWorkException(String msg) {
+        showTip(true);
+        //显示异常提醒数据
+        tvMessage.setText(msg);
+    }
+
+    @Override
+    public void showEmptyData() {
+        showNetWorkException("empty data");
+    }
 
     public void showTip(boolean show) {
         if (show) {

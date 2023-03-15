@@ -26,7 +26,7 @@ import com.jkb.junbin.sharing.feature.account.AccountController;
 import com.jkb.junbin.sharing.feature.account.AccountInfo;
 import com.jkb.junbin.sharing.feature.account.LoginActivity;
 import com.jkb.junbin.sharing.function.shell.MainActivity;
-import com.jkb.junbin.sharing.shadow.ShadowFileController;
+import com.jkb.junbin.sharing.shadow.ShadowFileRemoteDataSource;
 import com.jkb.junbin.sharing.shadow.ShadowMessageController;
 import com.jkb.junbin.sharing.shadow.ShadowPostCard;
 
@@ -39,7 +39,7 @@ import org.robolectric.annotation.Config;
 
 
 @RunWith(AndroidJUnit4.class)
-@Config(shadows = {ShadowFileController.class, ShadowMessageController.class, ShadowPostCard.class})
+@Config(shadows = {ShadowFileRemoteDataSource.class, ShadowMessageController.class, ShadowPostCard.class})
 @LargeTest
 public class SmokeTesting {
     @Before

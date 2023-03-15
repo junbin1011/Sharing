@@ -8,10 +8,6 @@ import java.util.Random;
 
 public class NetUtil {
     public static void mockNetExecutor() throws NetworkErrorException {
-        //模拟网络方法 不能在主线程调用
-        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
-            throw new NetworkOnMainThreadException();
-        }
         //模拟网络延时
         try {
             Thread.sleep(1000);
