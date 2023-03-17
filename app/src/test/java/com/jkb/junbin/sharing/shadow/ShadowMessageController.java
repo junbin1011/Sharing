@@ -3,7 +3,7 @@ package com.jkb.junbin.sharing.shadow;
 import android.accounts.NetworkErrorException;
 
 import com.jkb.junbin.sharing.feature.message.Message;
-import com.jkb.junbin.sharing.feature.message.MessageController;
+import com.jkb.junbin.sharing.feature.message.data.MessageRepository;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
@@ -12,11 +12,11 @@ import org.robolectric.annotation.RealObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@Implements(MessageController.class)
+@Implements(MessageRepository.class)
 public class ShadowMessageController {
 
     @RealObject
-    public MessageController messageController;
+    public MessageRepository messageController;
 
 
     @Implementation

@@ -109,6 +109,7 @@ public class SmokeTesting {
             onView(withText("个人")).perform(click());
             //then
             onView(withText("test")).check(isVisible());
+
         });
     }
 
