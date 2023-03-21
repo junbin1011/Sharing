@@ -57,12 +57,14 @@ class MessageViewModel(mContext: Context?) : ViewModel() {
         return null
     }
 
-    private fun getMessageListFromCache(): MutableList<Message>? {
+    private suspend fun getMessageListFromCache(): MutableList<Message>? {
         return messageRepository.getMessageListFromCache()
     }
 
     fun saveMessageToCache(messageList: List<Message>) {
-        messageRepository.saveMessageToCache(messageList)
+        viewModelScope.launch {
+            messageRepository.saveMessageToCache(messageList)
+        }
     }
 
     init {

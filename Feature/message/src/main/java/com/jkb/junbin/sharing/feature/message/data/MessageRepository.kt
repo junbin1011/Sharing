@@ -48,11 +48,11 @@ class MessageRepository(mContext: Context?) {
     }
 
     //判断游标是否为空
-    fun getMessageListFromCache(): MutableList<Message>? {
+    suspend fun getMessageListFromCache(): MutableList<Message>? {
         return dataSource?.getMessageListFromCache()
     }
 
-    fun saveMessageToCache(messageList: List<Message>) {
+    suspend fun saveMessageToCache(messageList: List<Message>) {
         dataSource?.saveMessageToCache(messageList)
     }
 

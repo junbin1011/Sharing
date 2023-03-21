@@ -25,7 +25,7 @@ class ShadowMessageRepository {
     }
 
     @Implementation
-    fun getMessageListFromCache(): MutableList<Message> {
+    suspend fun getMessageListFromCache(): MutableList<Message> {
         if (state == State.CACHE) {
             return getMessageData()
         } else {
@@ -34,7 +34,8 @@ class ShadowMessageRepository {
     }
 
     @Implementation
-    fun saveMessageToCache(messageList: List<Message>) {}
+    suspend fun saveMessageToCache(messageList: List<Message>) {}
+
 
     private fun getMessageData(): ArrayList<Message> {
         val messageList = ArrayList<Message>()
