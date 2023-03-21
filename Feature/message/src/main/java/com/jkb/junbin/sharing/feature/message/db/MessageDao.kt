@@ -14,6 +14,6 @@ interface MessageDao {
     suspend fun insertAll(vararg message: Message)
 
 
-    @1("DELETE FROM message_info")
+    @Query("DELETE FROM message_info")
     suspend fun deleteAll()
 }
