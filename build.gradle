@@ -20,6 +20,9 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url "https://oss.jfrog.org/libs-snapshot" }
+        maven{
+            url 'file:'+ rootDir.getPath()+'/lib'
+        }
     }
 }
 

@@ -32,6 +32,7 @@ android {
 
 dependencies {
     api project(':log')
+    api 'com.jkb.junbin.sharing.library:log:1.0.0'
     api project(':net')
     api project(':storage')
     api project(':transfer')
