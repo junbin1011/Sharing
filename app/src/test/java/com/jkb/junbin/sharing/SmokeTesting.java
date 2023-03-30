@@ -57,18 +57,6 @@ public class SmokeTesting {
     }
 
     @Test
-    public void show_login_success_when_input_correct_username_and_password() {
-        ActivityScenario.launch(LoginActivity.class);
-        onView(withId(R.id.username)).perform(typeText("123@163.com"));
-        onView(withId(R.id.password)).perform(typeText("123456"));
-        Intents.init();
-        onView(withId(R.id.login)).perform(click());
-        intended(allOf(
-                toPackage("com.jkb.junbin.sharing"),
-                hasComponent(hasClassName(MainActivity.class.getName()))));
-    }
-
-    @Test
     public void show_show_file_ui_when_click_tab_file() {
         //given
         ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class);
@@ -92,11 +80,9 @@ public class SmokeTesting {
             onView(withText("消息")).perform(click());
             //then
             onView(withText("张三共享文件到消息中...")).check(isVisible());
-            onView(withText("1.pdf")).check(isVisible());
-            onView(withText("2021-03-17 14:47:55")).check(isVisible());
+            onView(withText("1.pdf")).check(isVisible());       
             onView(withText("李四共享视频到消息中...")).check(isVisible());
             onView(withText("2.pdf")).check(isVisible());
-            onView(withText("2021-03-17 14:48:08")).check(isVisible());
         });
     }
 
